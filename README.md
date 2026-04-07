@@ -4,3 +4,6 @@ Membres de l'équipe :
 - Justine d'Andrea
 - Rayan Ibrahime
 - Hasina Rakotondratsimba
+
+Lien vers SonarQube :
+https://sonarcloud.io/project/overview?id=lilouuuuuuu_sharePortfolio
