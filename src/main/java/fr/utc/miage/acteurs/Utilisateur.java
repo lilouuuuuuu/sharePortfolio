@@ -16,14 +16,29 @@
 
 package fr.utc.miage.acteurs;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import fr.utc.miage.shares.Action;
+
 public class Utilisateur extends Personne {
 
-    private String nom;
-    private String prenom;
-    private String email;
-    private String password;
+    private List<Action> portefeuille;
 
     public Utilisateur(String n, String p, String email, String password) {
         super(n, p, email, password);
+        this.portefeuille = new ArrayList<>();
+    }
+
+    public List<Action> getPortefeuille() {
+        return portefeuille;
+    }
+
+    public void setPortefeuille(List<Action> portefeuille) {
+        if (portefeuille == null) {
+            throw new IllegalArgumentException("Le portefeuille ne peut être null.");
+        }
+
+        this.portefeuille = portefeuille;
     }
 }
