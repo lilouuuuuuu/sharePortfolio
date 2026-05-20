@@ -61,4 +61,11 @@ public class Personne {
         }
         this.password = password;
     }
+
+    public void modifierCompte( String nom, String prenom, String email, String password) {
+        setNom(nom);
+        setPrenom(prenom);
+        setEmail(email);
+        setPassword(password);
+    }
 }

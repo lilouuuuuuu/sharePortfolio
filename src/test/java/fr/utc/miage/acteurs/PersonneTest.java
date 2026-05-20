@@ -21,7 +21,6 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import org.junit.jupiter.api.Test;
 
 class PersonneTest {
@@ -170,5 +169,29 @@ class PersonneTest {
         personne.setPassword(newPassword);
         final String result = personne.getPassword();
         assertEquals(newPassword, result);
+    }
+
+
+    @Test
+    void testModifierCompte() {
+        Personne personne = new Personne(
+                "Dupont",
+                "Jean",
+                "jean@gmail.com",
+                "1234"
+        );
+
+      
+        personne.modifierCompte(
+                "Martin",
+                "Paul",
+                "paul@gmail.com",
+                "abcd"
+        );
+
+        assertEquals("Martin", personne.getNom());
+        assertEquals("Paul", personne.getPrenom());
+        assertEquals("paul@gmail.com", personne.getEmail());
+        assertEquals("abcd", personne.getPassword());
     }
 }
