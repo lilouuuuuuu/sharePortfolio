@@ -30,21 +30,30 @@ public class Jour {
      * Day attribute.
      */
     private final int day;
+    /**
+     * Month attribute.
+     */
+    private final int month;
 
     /**
-     * Builds a Jour object from one year and one day.
+     * Builds a Jour object from one year, one month, and one day.
      *
      * @param aYear the year of the jour &gt; 0
+     * @param aMonth the month of the jour &gt; 0
      * @param aDay  theday of the jour &gt; 0
      */
-    public Jour(final int aYear, final int aDay) {
+    public Jour(final int aYear, final int aMonth, final int aDay) {
         if (0 >= aDay) {
             throw new IllegalArgumentException("Day must be strictly more than 0");
         }
         if (0 >= aYear) {
             throw new IllegalArgumentException("Year must be strictly more than 0");
         }
+        if (0 >= aMonth) {
+            throw new IllegalArgumentException("Month must be strictly more than 0");
+        }
         this.year = aYear;
+        this.month = aMonth;
         this.day = aDay;
     }
 
@@ -66,11 +75,21 @@ public class Jour {
         return day;
     }
 
+    /**
+     * Returns the month of the jour.
+     *
+     * @return the month property
+     */
+    public int getMonth() {
+        return month;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + year;
+        result = prime * result + month;
         result = prime * result + day;
         return result;
     }
@@ -87,7 +106,7 @@ public class Jour {
             return false;
         }
         Jour other = (Jour) obj;
-        return (year == other.year) && (day == other.day);
+        return (year == other.year) && (month == other.month) && (day == other.day);
     }
 
     @Override
