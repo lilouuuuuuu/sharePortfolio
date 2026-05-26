@@ -22,12 +22,15 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import fr.utc.miage.shares.ActionSimple;
+
 class UtilisateurTest {
 
     private static final String NOM = "Foo Nom";
     private static final String PRENOM = "Foo Prenom";
     private static final String EMAIL = "ab@gmail.com";
     private static final String PASSWORD = "password";
+    private static final String ACTION_SIMPLE = "Action Simple";
 
     @Test
     void testConstructorWithCorrectParameters() {
@@ -52,4 +55,24 @@ class UtilisateurTest {
         assertThrows(IllegalArgumentException.class, () -> u.setPortefeuille(null));
     }
 
+    @Test
+    void testVendreActionSimpleWithNullParameter() {
+        final Utilisateur u = new Utilisateur(NOM, PRENOM, EMAIL, PASSWORD);
+        assertThrows(IllegalArgumentException.class, () -> u.vendreActionSimple(null));
+    }
+
+    @Test
+    void testVendreActionNotInPortefeuille() {
+        final Utilisateur u = new Utilisateur(NOM, PRENOM, EMAIL, PASSWORD);
+        ActionSimple actionSimple = new ActionSimple(ACTION_SIMPLE);
+        assertDoesNotThrow(() -> u.vendreActionSimple(actionSimple));
+    }
+
+    @Test
+    void testVendreActionSimpleWithCorrectParameter() {
+        final Utilisateur u = new Utilisateur(NOM, PRENOM, EMAIL, PASSWORD);
+        ActionSimple actionSimple = new ActionSimple(ACTION_SIMPLE);
+        u.getPortefeuille().add(actionSimple);
+        assertDoesNotThrow(() -> u.vendreActionSimple(actionSimple));
+    }
 }
