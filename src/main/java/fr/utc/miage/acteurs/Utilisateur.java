@@ -18,11 +18,13 @@ package fr.utc.miage.acteurs;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import fr.utc.miage.shares.Action;
 
 public class Utilisateur extends Personne {
 
+    Logger logger = Logger.getLogger(getClass().getName());
     private List<Action> portefeuille;
 
     public Utilisateur(String n, String p, String email, String password) {
@@ -44,11 +46,11 @@ public class Utilisateur extends Personne {
 
     public void consulterPortefeuille() {
         if (portefeuille.isEmpty()) {
-            System.out.println("Votre portefeuille est vide.");
+            logger.info("Votre portefeuille est vide.");
         } else {
-            System.out.println("Votre portefeuille contient les actions suivantes :");
+            logger.info("Votre portefeuille contient les actions suivantes :");
             for (Action action : portefeuille) {
-                System.out.println("- " + action.getLibelle());
+                logger.info("- " + action.getLibelle());
             }
         }
     }
@@ -59,6 +61,6 @@ public class Utilisateur extends Personne {
         }
 
         portefeuille.add(action);
-        System.out.println("Vous avez acheté l'action : " + action.getLibelle());
+        logger.info("Vous avez acheté l'action : " + action.getLibelle());
     }
 }

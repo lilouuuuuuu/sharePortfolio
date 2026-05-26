@@ -15,7 +15,9 @@
  */
 package fr.utc.miage.acteurs;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
@@ -78,7 +80,10 @@ class UtilisateurTest {
     void testAcheterActionWithCorrectParameters() {
         final Utilisateur u = new Utilisateur(NOM, PRENOM, EMAIL, PASSWORD);
         final ActionSimple action = new ActionSimple(LIBELLE_ACTION);
-        assertDoesNotThrow(() -> u.acheterAction(action));
+        assertAll("Acheter Action with correct parameters",
+                () -> assertDoesNotThrow(() -> u.acheterAction(action)),
+                () -> assertEquals(1, u.getPortefeuille().size()),
+                () -> assertEquals(LIBELLE_ACTION, u.getPortefeuille().get(0).getLibelle()));
     }
 
     @Test
