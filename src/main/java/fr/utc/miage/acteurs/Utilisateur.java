@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.utc.miage.shares.Action;
+import fr.utc.miage.shares.ActionSimple;
 
 public class Utilisateur extends Personne {
 
@@ -40,5 +41,12 @@ public class Utilisateur extends Personne {
         }
 
         this.portefeuille = portefeuille;
+    }
+
+    public void vendreActionSimple (ActionSimple actionSimple) {
+        if (actionSimple == null) {
+            throw new IllegalArgumentException("L'action à vendre ne peut pas être null.");
+        }
+        portefeuille.remove(actionSimple);
     }
 }
