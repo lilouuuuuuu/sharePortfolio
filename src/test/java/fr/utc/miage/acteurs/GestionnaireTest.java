@@ -22,6 +22,8 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 
+import fr.utc.miage.shares.ActionSimple;
+
 public class GestionnaireTest {
 
     public static final String NOM = "Dupond";
@@ -56,6 +58,14 @@ public class GestionnaireTest {
     void testRemoveActionSimpleWithNullParameter() {
         final Gestionnaire gestionnaire = new Gestionnaire(NOM, PRENOM, EMAIL, PASSWORD);
         assertThrows(IllegalArgumentException.class, () -> gestionnaire.removeActionSimple(null));
+    }
+
+    @Test
+    void testRemoveActionSimpleWithCorrectParameter() {
+        final Gestionnaire gestionnaire = new Gestionnaire(NOM, PRENOM, EMAIL, PASSWORD);
+        final ActionSimple actionSimple = new ActionSimple("Action Simple");
+        gestionnaire.getPortefeuilleActions().add(actionSimple);
+        assertDoesNotThrow(() -> gestionnaire.removeActionSimple(actionSimple));
     }
 
 
