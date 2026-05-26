@@ -173,7 +173,7 @@ class PersonneTest {
 
 
     @Test
-    void testModifierCompte() {
+    void testModifierCompteWithCorrectParamsShouldWorks() {
         Personne personne = new Personne(
                 "Dupont",
                 "Jean",
@@ -193,5 +193,17 @@ class PersonneTest {
         assertEquals("Paul", personne.getPrenom());
         assertEquals("paul@gmail.com", personne.getEmail());
         assertEquals("abcd", personne.getPassword());
+    }
+
+    @Test
+    void testSupprimerCompteWithCorrectParamsShouldWorks() {
+        Personne personne = new Personne(FOO_NOM, FOO_PRENOM, FOO_EMAIL, FOO_PASSWORD);
+        personne.supprimerCompte();
+        assertAll(() -> {
+            assertEquals(null, personne.getNom());
+            assertEquals(null, personne.getPrenom());
+            assertEquals(null, personne.getEmail());
+            assertEquals(null, personne.getPassword());
+        });
     }
 }
