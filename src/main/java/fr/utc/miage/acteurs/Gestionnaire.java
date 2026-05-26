@@ -57,3 +57,10 @@ public class Gestionnaire extends Personne {
         throw new IllegalArgumentException("L'action simple à mettre à jour n'existe pas dans le portefeuille.");
     }
 }
+    public void removeActionSimple(ActionSimple actionSimple) {
+        if (actionSimple == null) {
+            throw new IllegalArgumentException("L'action à supprimer ne peut pas être null.");
+        }
+        portefeuilleActions.remove(actionSimple);
+    }
+}
