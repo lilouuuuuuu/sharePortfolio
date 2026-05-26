@@ -26,6 +26,8 @@ class JourTest {
 
     private static final int DEFAULT_YEAR = 1;
     private static final int DEFAULT_DAY = 1;
+    private static final int DEFAULT_MONTH = 1;
+    private static final int INVALID_MONTH = 0;
     private static final int INVALID_YEAR = 0;
     private static final int INVALID_DAY = 0;
 
@@ -33,13 +35,16 @@ class JourTest {
     void testAllConstructorUsage() {
         Assertions.assertAll("Group of constructor tests",
                 () -> assertDoesNotThrow(() -> {
-                    new Jour(DEFAULT_YEAR, DEFAULT_DAY);
+                    new Jour(DEFAULT_YEAR, DEFAULT_MONTH, DEFAULT_DAY);
                 }),
                 () -> assertThrows(IllegalArgumentException.class, () -> {
-                    new Jour(DEFAULT_YEAR, INVALID_DAY);
+                    new Jour(DEFAULT_YEAR, INVALID_MONTH, DEFAULT_DAY);
+                }, "The month argument should be strictly more than 0"),
+                () -> assertThrows(IllegalArgumentException.class, () -> {
+                    new Jour(DEFAULT_YEAR, DEFAULT_MONTH, INVALID_DAY);
                 }, "The day argument should be strictly more than 0"),
                 () -> assertThrows(IllegalArgumentException.class, () -> {
-                    new Jour(INVALID_YEAR, DEFAULT_DAY);
+                    new Jour(INVALID_YEAR, DEFAULT_MONTH, DEFAULT_DAY);
                 }, "The year argument should be strictly more than 0")
         );
     }
@@ -79,7 +84,7 @@ class JourTest {
     @Test
     void testNotEqualsWithDifferentDaysShouldWork() {
         final Jour jour1 = getDefaultJour();
-        final Jour jour2 = new Jour(DEFAULT_YEAR, DEFAULT_DAY + 1);
+        final Jour jour2 = new Jour(DEFAULT_YEAR, DEFAULT_MONTH, DEFAULT_DAY + 1);
 
         assertNotEquals(jour1, jour2, "Objects Jour with different days should not be equals");
     }
@@ -87,7 +92,7 @@ class JourTest {
     @Test
     void testNotEqualsWithDifferentYearsShouldWork() {
         final Jour jour1 = getDefaultJour();
-        final Jour jour2 = new Jour(DEFAULT_YEAR + 1, DEFAULT_DAY);
+        final Jour jour2 = new Jour(DEFAULT_YEAR + 1, DEFAULT_MONTH, DEFAULT_DAY);
 
         assertNotEquals(jour1, jour2, "Objects Jour with different years should not be equals");
     }
@@ -95,7 +100,7 @@ class JourTest {
     @Test
     void testNotEqualsWithDifferentYearsAndDaysShouldWork() {
         final Jour jour1 = getDefaultJour();
-        final Jour jour2 = new Jour(DEFAULT_YEAR + 1, DEFAULT_DAY + 1);
+        final Jour jour2 = new Jour(DEFAULT_YEAR + 1, DEFAULT_MONTH, DEFAULT_DAY + 1);
 
         assertNotEquals(jour1, jour2, "Objects Jour with different years and days should not be equals");
     }
@@ -131,6 +136,6 @@ class JourTest {
      * Creates a Jour object with default year and day.
      */
     private Jour getDefaultJour() {
-        return new Jour(DEFAULT_YEAR, DEFAULT_DAY);
+        return new Jour(DEFAULT_YEAR, DEFAULT_MONTH, DEFAULT_DAY);
     }
 }
