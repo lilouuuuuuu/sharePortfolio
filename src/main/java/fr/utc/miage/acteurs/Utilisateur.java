@@ -41,4 +41,24 @@ public class Utilisateur extends Personne {
 
         this.portefeuille = portefeuille;
     }
+
+    public void consulterPortefeuille() {
+        if (portefeuille.isEmpty()) {
+            System.out.println("Votre portefeuille est vide.");
+        } else {
+            System.out.println("Votre portefeuille contient les actions suivantes :");
+            for (Action action : portefeuille) {
+                System.out.println("- " + action.getLibelle());
+            }
+        }
+    }
+
+    public void acheterAction(Action action) {
+        if (action == null) {
+            throw new IllegalArgumentException("L'action ne peut être null.");
+        }
+
+        portefeuille.add(action);
+        System.out.println("Vous avez acheté l'action : " + action.getLibelle());
+    }
 }
