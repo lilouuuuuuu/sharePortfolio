@@ -88,7 +88,8 @@ public class GestionnaireTest {
             assertEquals(NOUVELLE_VALEUR_ACTION, actionSimple.valeur(nextDay));
         });
     }
-}
+
+    @Test
     void testRemoveActionSimpleWithNullParameter() {
         final Gestionnaire gestionnaire = new Gestionnaire(NOM, PRENOM, EMAIL, PASSWORD);
         assertThrows(IllegalArgumentException.class, () -> gestionnaire.removeActionSimple(null));
