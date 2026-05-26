@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import fr.utc.miage.shares.Action;
+import fr.utc.miage.shares.ActionComposee;
 import fr.utc.miage.shares.ActionSimple;
 
 public class Utilisateur extends Personne {
@@ -70,5 +71,12 @@ public class Utilisateur extends Personne {
             throw new IllegalArgumentException("L'action à vendre ne peut pas être null.");
         }
         portefeuille.remove(actionSimple);
+    }
+
+    public void vendreActionComposee(ActionComposee actionComposee) {
+        if (actionComposee == null) {
+            throw new IllegalArgumentException("L'action à vendre ne peut pas être null.");
+        }
+        portefeuille.remove(actionComposee);
     }
 }
