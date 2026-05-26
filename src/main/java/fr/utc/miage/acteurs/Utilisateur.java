@@ -64,4 +64,11 @@ public class Utilisateur extends Personne {
         portefeuille.add(action);
         logger.info("Vous avez acheté l'action : " + action.getLibelle());
     }
+
+    public void vendreActionSimple (ActionSimple actionSimple) {
+        if (actionSimple == null) {
+            throw new IllegalArgumentException("L'action à vendre ne peut pas être null.");
+        }
+        portefeuille.remove(actionSimple);
+    }
 }

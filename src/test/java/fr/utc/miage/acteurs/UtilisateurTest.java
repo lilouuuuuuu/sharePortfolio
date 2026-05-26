@@ -91,6 +91,9 @@ class UtilisateurTest {
     void testAcheterActionWithNullParameter() {
         final Utilisateur u = new Utilisateur(NOM, PRENOM, EMAIL, PASSWORD);
         assertThrows(IllegalArgumentException.class, () -> u.acheterAction(null));
+    }
+    
+    @Test
     void testVendreActionSimpleWithNullParameter() {
         final Utilisateur u = new Utilisateur(NOM, PRENOM, EMAIL, PASSWORD);
         assertThrows(IllegalArgumentException.class, () -> u.vendreActionSimple(null));
