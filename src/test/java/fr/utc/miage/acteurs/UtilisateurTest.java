@@ -15,13 +15,17 @@
  */
 package fr.utc.miage.acteurs;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import fr.utc.miage.shares.Action;
 import fr.utc.miage.shares.ActionSimple;
 
 class UtilisateurTest {
@@ -30,6 +34,7 @@ class UtilisateurTest {
     private static final String PRENOM = "Foo Prenom";
     private static final String EMAIL = "ab@gmail.com";
     private static final String PASSWORD = "password";
+    private static final String LIBELLE_ACTION = "Action 1";
     private static final String ACTION_SIMPLE = "Action Simple";
 
     @Test
@@ -55,6 +60,39 @@ class UtilisateurTest {
         assertThrows(IllegalArgumentException.class, () -> u.setPortefeuille(null));
     }
 
+    @Test
+    void testConsulterPortefeuilleWithEmptyPortefeuille() {
+        final Utilisateur u = new Utilisateur(NOM, PRENOM, EMAIL, PASSWORD);
+        final List<Action> emptyPortefeuille = new ArrayList<>();
+        u.setPortefeuille(emptyPortefeuille);
+        assertDoesNotThrow(u::consulterPortefeuille);
+    }
+
+    @Test
+    void testConsulterPortefeuilleWithNonEmptyPortefeuille() {
+        final Utilisateur u = new Utilisateur(NOM, PRENOM, EMAIL, PASSWORD);
+        final ActionSimple action = new ActionSimple(LIBELLE_ACTION);
+        final List<Action> portefeuille = List.of(action);
+        u.setPortefeuille(portefeuille);
+        assertDoesNotThrow(u::consulterPortefeuille);
+    }
+
+    @Test
+    void testAcheterActionWithCorrectParameters() {
+        final Utilisateur u = new Utilisateur(NOM, PRENOM, EMAIL, PASSWORD);
+        final ActionSimple action = new ActionSimple(LIBELLE_ACTION);
+        assertAll("Acheter Action with correct parameters",
+                () -> assertDoesNotThrow(() -> u.acheterAction(action)),
+                () -> assertEquals(1, u.getPortefeuille().size()),
+                () -> assertEquals(LIBELLE_ACTION, u.getPortefeuille().get(0).getLibelle()));
+    }
+
+    @Test
+    void testAcheterActionWithNullParameter() {
+        final Utilisateur u = new Utilisateur(NOM, PRENOM, EMAIL, PASSWORD);
+        assertThrows(IllegalArgumentException.class, () -> u.acheterAction(null));
+    }
+    
     @Test
     void testVendreActionSimpleWithNullParameter() {
         final Utilisateur u = new Utilisateur(NOM, PRENOM, EMAIL, PASSWORD);

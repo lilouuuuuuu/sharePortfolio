@@ -18,12 +18,14 @@ package fr.utc.miage.acteurs;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import fr.utc.miage.shares.Action;
 import fr.utc.miage.shares.ActionSimple;
 
 public class Utilisateur extends Personne {
 
+    Logger logger = Logger.getLogger(getClass().getName());
     private List<Action> portefeuille;
 
     public Utilisateur(String n, String p, String email, String password) {
@@ -41,6 +43,26 @@ public class Utilisateur extends Personne {
         }
 
         this.portefeuille = portefeuille;
+    }
+
+    public void consulterPortefeuille() {
+        if (portefeuille.isEmpty()) {
+            logger.info("Votre portefeuille est vide.");
+        } else {
+            logger.info("Votre portefeuille contient les actions suivantes :");
+            for (Action action : portefeuille) {
+                logger.info("- " + action.getLibelle());
+            }
+        }
+    }
+
+    public void acheterAction(Action action) {
+        if (action == null) {
+            throw new IllegalArgumentException("L'action ne peut être null.");
+        }
+
+        portefeuille.add(action);
+        logger.info("Vous avez acheté l'action : " + action.getLibelle());
     }
 
     public void vendreActionSimple (ActionSimple actionSimple) {
