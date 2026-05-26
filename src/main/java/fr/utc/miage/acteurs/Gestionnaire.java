@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.utc.miage.shares.Action;
+import fr.utc.miage.shares.ActionSimple;
 
 public class Gestionnaire extends Personne {
     private List<Action> portefeuilleActions;
@@ -38,5 +39,12 @@ public class Gestionnaire extends Personne {
             throw new IllegalArgumentException("Le portefeuille d'actions ne peut pas être null.");
         }
         this.portefeuilleActions = portefeuilleActions;
+    }
+
+    public void removeActionSimple(ActionSimple actionSimple) {
+        if (actionSimple == null) {
+            throw new IllegalArgumentException("L'action à supprimer ne peut pas être null.");
+        }
+        portefeuilleActions.remove(actionSimple);
     }
 }
