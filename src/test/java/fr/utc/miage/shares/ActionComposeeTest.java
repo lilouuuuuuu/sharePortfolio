@@ -112,8 +112,8 @@ class ActionComposeeTest {
         ActionSimple actionSimple = new ActionSimple(ACTION_AIRBUS);
         actions.put(actionSimple, PART_ACTION_COMPLETE);
         ActionComposee actionComposee = new ActionComposee(ACTION_COMPOSEE, actions);
-        float result = actionComposee.valeur(new Jour(2025, 1));
-        assertEquals(PART_ACTION_AIRBUS * actionSimple.valeur(new Jour(2025, 1)), result);
+        float result = actionComposee.valeur(new Jour(2025, 1, 1));
+        assertEquals(PART_ACTION_AIRBUS * actionSimple.valeur(new Jour(2025, 1, 1)), result);
     }
 
     @Test
