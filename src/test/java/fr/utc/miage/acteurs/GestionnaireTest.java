@@ -16,10 +16,10 @@
 
 package fr.utc.miage.acteurs;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 
 public class GestionnaireTest {
@@ -51,4 +51,13 @@ public class GestionnaireTest {
         final Gestionnaire gestionnaire = new Gestionnaire(NOM, PRENOM, EMAIL, PASSWORD);
         assertThrows(IllegalArgumentException.class, () -> gestionnaire.setPortefeuilleActions(null));
     }
+
+    @Test
+    void testRemoveActionSimpleWithNullParameter() {
+        final Gestionnaire gestionnaire = new Gestionnaire(NOM, PRENOM, EMAIL, PASSWORD);
+        assertThrows(IllegalArgumentException.class, () -> gestionnaire.removeActionSimple(null));
+    }
+
+
+    
 }
