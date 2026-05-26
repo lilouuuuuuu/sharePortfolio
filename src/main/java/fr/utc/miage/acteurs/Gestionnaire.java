@@ -21,6 +21,7 @@ import java.util.List;
 
 import fr.utc.miage.shares.Action;
 import fr.utc.miage.shares.ActionSimple;
+import fr.utc.miage.shares.Jour;
 
 public class Gestionnaire extends Personne {
     private List<Action> portefeuilleActions;
@@ -39,6 +40,21 @@ public class Gestionnaire extends Personne {
             throw new IllegalArgumentException("Le portefeuille d'actions ne peut pas être null.");
         }
         this.portefeuilleActions = portefeuilleActions;
+    }
+
+    public void miseAJourActionSimple(ActionSimple actionSimple, Jour jour, float nouvelleValeur) {
+        if (actionSimple == null) {
+            throw new IllegalArgumentException("L'action simple ne peut pas être null.");
+        }
+        for (int i = 0; i < portefeuilleActions.size(); i++) {
+            Action action = portefeuilleActions.get(i);
+            if (action instanceof ActionSimple actionSimpleInstance &&
+                 action.getLibelle().equals(actionSimple.getLibelle())) {
+                actionSimpleInstance.enrgCours(jour, nouvelleValeur);
+                return;
+            }
+        }
+        throw new IllegalArgumentException("L'action simple à mettre à jour n'existe pas dans le portefeuille.");
     }
 
     public void removeActionSimple(ActionSimple actionSimple) {

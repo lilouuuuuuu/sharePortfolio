@@ -35,6 +35,7 @@ class UtilisateurTest {
     private static final String EMAIL = "ab@gmail.com";
     private static final String PASSWORD = "password";
     private static final String LIBELLE_ACTION = "Action 1";
+    private static final String ACTION_SIMPLE = "Action Simple";
 
     @Test
     void testConstructorWithCorrectParameters() {
@@ -90,5 +91,23 @@ class UtilisateurTest {
     void testAcheterActionWithNullParameter() {
         final Utilisateur u = new Utilisateur(NOM, PRENOM, EMAIL, PASSWORD);
         assertThrows(IllegalArgumentException.class, () -> u.acheterAction(null));
+    void testVendreActionSimpleWithNullParameter() {
+        final Utilisateur u = new Utilisateur(NOM, PRENOM, EMAIL, PASSWORD);
+        assertThrows(IllegalArgumentException.class, () -> u.vendreActionSimple(null));
+    }
+
+    @Test
+    void testVendreActionNotInPortefeuille() {
+        final Utilisateur u = new Utilisateur(NOM, PRENOM, EMAIL, PASSWORD);
+        ActionSimple actionSimple = new ActionSimple(ACTION_SIMPLE);
+        assertDoesNotThrow(() -> u.vendreActionSimple(actionSimple));
+    }
+
+    @Test
+    void testVendreActionSimpleWithCorrectParameter() {
+        final Utilisateur u = new Utilisateur(NOM, PRENOM, EMAIL, PASSWORD);
+        ActionSimple actionSimple = new ActionSimple(ACTION_SIMPLE);
+        u.getPortefeuille().add(actionSimple);
+        assertDoesNotThrow(() -> u.vendreActionSimple(actionSimple));
     }
 }
