@@ -18,8 +18,7 @@ package fr.utc.miage.acteurs;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 import fr.utc.miage.shares.ActionSimple;
@@ -101,8 +100,5 @@ public class GestionnaireTest {
         final ActionSimple actionSimple = new ActionSimple("Action Simple");
         gestionnaire.getPortefeuilleActions().add(actionSimple);
         assertDoesNotThrow(() -> gestionnaire.removeActionSimple(actionSimple));
-    }
-
-
-    
+    }    
 }
