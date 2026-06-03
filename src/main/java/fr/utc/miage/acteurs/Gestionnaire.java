@@ -17,6 +17,7 @@
 package fr.utc.miage.acteurs;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import fr.utc.miage.shares.Action;
@@ -31,7 +32,7 @@ public class Gestionnaire extends Personne {
         super(nom, prenom, email, motDePasse);
         this.portefeuilleActions = new ArrayList<>();
     }
-    
+
     public List<Action> getPortefeuilleActions() {
         return portefeuilleActions;
     }
@@ -50,12 +51,26 @@ public class Gestionnaire extends Personne {
         for (int i = 0; i < portefeuilleActions.size(); i++) {
             Action action = portefeuilleActions.get(i);
             if (action instanceof ActionSimple actionSimpleInstance &&
-                 action.getLibelle().equals(actionSimple.getLibelle())) {
+                    action.getLibelle().equals(actionSimple.getLibelle())) {
                 actionSimpleInstance.enrgCours(jour, nouvelleValeur);
                 return;
             }
         }
         throw new IllegalArgumentException("L'action simple à mettre à jour n'existe pas dans le portefeuille.");
+    }
+
+    public void miseAJourActionComposee(ActionComposee actioncomposee, HashMap<Action, Float> nouvelleActionComposee) {
+
+        if (actioncomposee == null) {
+            throw new IllegalArgumentException("L'action composée ne peut être null.");
+        }
+
+        if (nouvelleActionComposee.isEmpty()) {
+            throw new IllegalArgumentException("La liste de mise à jour ne peut pas être vide");
+        }
+
+        actioncomposee.setActions(nouvelleActionComposee);
+
     }
 
     public void removeActionSimple(ActionSimple actionSimple) {
