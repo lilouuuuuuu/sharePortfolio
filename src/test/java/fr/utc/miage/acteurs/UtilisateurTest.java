@@ -19,10 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 import fr.utc.miage.shares.Action;
@@ -132,5 +129,43 @@ class UtilisateurTest {
     void testAcheterActionComposeeWithNullParameter() {
         final Utilisateur u = new Utilisateur(NOM, PRENOM, EMAIL, PASSWORD);
         assertThrows(IllegalArgumentException.class, () -> u.acheterActionComposee(null));
+    }
+  
+    @Test
+    void testVendreActionComposeeWithNullParameter() {
+        final Utilisateur u = new Utilisateur(NOM, PRENOM, EMAIL, PASSWORD);
+        assertThrows(IllegalArgumentException.class, () -> u.vendreActionComposee(null));
+    }
+
+    @Test
+    void testVendreActionComposeeNotInPortefeuille() {
+        final Utilisateur u = new Utilisateur(NOM, PRENOM, EMAIL, PASSWORD);
+
+        ActionSimple actionSimple = new ActionSimple(ACTION_SIMPLE);
+        HashMap<Action, Float> portefeuille = new HashMap<>();
+        portefeuille.put(actionSimple, 100.0f);
+        final ActionComposee actionComposee = new ActionComposee("Action Composee", portefeuille);
+
+        assertAll(
+            () -> assertDoesNotThrow(() -> u.vendreActionComposee(actionComposee)),
+            () -> assertFalse(u.getPortefeuille().contains(actionComposee))
+        );
+    }
+
+    @Test
+    void testVendreActionComposeeWithCorrectParameter() {
+        final Utilisateur u = new Utilisateur(NOM, PRENOM, EMAIL, PASSWORD);
+
+        ActionSimple actionSimple = new ActionSimple(ACTION_SIMPLE);
+        HashMap<Action, Float> portefeuille = new HashMap<>();
+        portefeuille.put(actionSimple, 100.0f);
+        final ActionComposee actionComposee = new ActionComposee("Action Composee", portefeuille);
+
+        u.getPortefeuille().add(actionComposee);
+        assertAll(
+            () -> assertTrue(u.getPortefeuille().contains(actionComposee)),
+            () -> assertDoesNotThrow(() -> u.vendreActionComposee(actionComposee)),
+            () -> assertFalse(u.getPortefeuille().contains(actionComposee))
+        );
     }
 }

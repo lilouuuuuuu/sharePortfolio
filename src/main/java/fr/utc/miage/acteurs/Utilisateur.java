@@ -80,4 +80,11 @@ public class Utilisateur extends Personne {
         portefeuille.add(actionComposee);
         logger.info("Vous avez acheté l'action composée : " + actionComposee.getLibelle());
     }
+  
+    public void vendreActionComposee(ActionComposee actionComposee) {
+        if (actionComposee == null) {
+            throw new IllegalArgumentException("L'action à vendre ne peut pas être null.");
+        }
+        portefeuille.remove(actionComposee);
+    }
 }
