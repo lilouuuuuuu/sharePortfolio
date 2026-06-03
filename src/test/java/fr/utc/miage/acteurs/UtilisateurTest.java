@@ -15,12 +15,11 @@
  */
 package fr.utc.miage.acteurs;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 import fr.utc.miage.shares.Action;
@@ -113,6 +112,25 @@ class UtilisateurTest {
         assertDoesNotThrow(() -> u.vendreActionSimple(actionSimple));
     }
 
+    @Test
+    void testAcheterActionComposeeWithCorrectParameters() {
+        final Utilisateur u = new Utilisateur(NOM, PRENOM, EMAIL, PASSWORD);
+        ActionSimple actionSimple = new ActionSimple(ACTION_SIMPLE);
+        HashMap<Action, Float> actions = new HashMap<>();
+        actions.put(actionSimple, 100.0f);
+        ActionComposee actionComposee = new ActionComposee("Action Composée", actions);
+        assertAll("Acheter Action Composée with correct parameters",
+                () -> assertDoesNotThrow(() -> u.acheterActionComposee(actionComposee)),
+                () -> assertEquals(1, u.getPortefeuille().size()),
+                () -> assertEquals("Action Composée", u.getPortefeuille().get(0).getLibelle()));
+    }
+
+    @Test
+    void testAcheterActionComposeeWithNullParameter() {
+        final Utilisateur u = new Utilisateur(NOM, PRENOM, EMAIL, PASSWORD);
+        assertThrows(IllegalArgumentException.class, () -> u.acheterActionComposee(null));
+    }
+  
     @Test
     void testVendreActionComposeeWithNullParameter() {
         final Utilisateur u = new Utilisateur(NOM, PRENOM, EMAIL, PASSWORD);
