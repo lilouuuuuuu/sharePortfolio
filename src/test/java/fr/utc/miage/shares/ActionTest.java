@@ -81,10 +81,51 @@ class ActionTest {
     }
 
     @Test
+    void testEqualsActionSimpleWithSameObject() {
+        final ActionSimple action = new ActionSimple(FOO_SHARE1);
+
+        Assertions.assertEquals(action, action);
+    }
+
+    @Test
+    void testEqualsActionSimpleWithSimilarObject() {
+        final ActionSimple action1 = new ActionSimple(FOO_SHARE1);
+        final ActionSimple action2 = new ActionSimple(FOO_SHARE1);
+
+        Assertions.assertEquals(action1, action2);
+    }
+
+    @Test
+    void testEqualsActionSimpleWithDifferentObject() {
+        final ActionSimple action1 = new ActionSimple(FOO_SHARE1);
+        final ActionSimple action2 = new ActionSimple(FOO_SHARE2);
+
+        Assertions.assertNotEquals(action1, action2);
+    }
+
+    @Test
+    void testEqualsActionSimpleWithNullObject() {
+        final ActionSimple action1 = new ActionSimple(FOO_SHARE1);
+        final ActionSimple action2 = null;
+
+        Assertions.assertNotEquals(action1, action2);
+    }
+
+    @Test
+    void testEqualsActionSimpleWithObjectFromOtherClass() {
+        final ActionSimple action1 = new ActionSimple(FOO_SHARE1);
+        final Integer action2 = 0;
+
+        Assertions.assertNotEquals(action1, action2);
+    }
+
+    @Test
     void testHashCode() {
         final Action action = new ActionImpl(FOO_SHARE1);
         Assertions.assertDoesNotThrow(action::hashCode, "hashcode must always provide a value");
     }
+
+    
 
     private static class ActionImpl extends Action {
 

@@ -40,9 +40,7 @@ public class ActionSimple extends Action {
 
     // enrg possible si pas de cours pour ce jour
     public void enrgCours(final Jour j, final float v) {
-        if (!this.mapCours.containsKey(j)) {
-            this.mapCours.put(j, v);
-        }
+        this.mapCours.computeIfAbsent(j, k -> v);
     }
 
     @Override
@@ -52,5 +50,22 @@ public class ActionSimple extends Action {
         } else {
             return DEFAULT_ACTION_VALUE;
         }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        ActionSimple other = (ActionSimple) obj;
+        return this.getLibelle().equals(other.getLibelle());    
+    }
+
+    @Override
+    public int hashCode() {
+        return this.getLibelle().hashCode();
     }
 }
