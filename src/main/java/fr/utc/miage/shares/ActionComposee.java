@@ -17,7 +17,6 @@
 
 package fr.utc.miage.shares;
 
-import java.nio.channels.FileChannel.MapMode;
 import java.util.HashMap;
 import java.util.Map;
 
