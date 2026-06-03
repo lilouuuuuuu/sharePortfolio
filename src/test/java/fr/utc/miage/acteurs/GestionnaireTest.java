@@ -16,11 +16,14 @@
 
 package fr.utc.miage.acteurs;
 
+import java.util.HashMap;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
+import fr.utc.miage.shares.Action;
+import fr.utc.miage.shares.ActionComposee;
 import fr.utc.miage.shares.ActionSimple;
 import fr.utc.miage.shares.Jour;
 
@@ -100,5 +103,26 @@ public class GestionnaireTest {
         final ActionSimple actionSimple = new ActionSimple("Action Simple");
         gestionnaire.getPortefeuilleActions().add(actionSimple);
         assertDoesNotThrow(() -> gestionnaire.removeActionSimple(actionSimple));
-    }    
+    }   
+    
+    @Test
+    void testRemoveActionComposeeWithNullParameter() {
+        final Gestionnaire gestionnaire = new Gestionnaire(NOM, PRENOM, EMAIL, PASSWORD);
+        assertThrows(IllegalArgumentException.class, () -> gestionnaire.removeActionComposee(null));
+    }
+
+    @Test
+    void testRemoveActionComposeeWithCorrectParameter() {
+        final Gestionnaire gestionnaire = new Gestionnaire(NOM, PRENOM, EMAIL, PASSWORD);
+        final HashMap<Action, Float> actions = new HashMap<>();
+        ActionSimple action = new ActionSimple("Action");
+        actions.put(action, 100.0f);
+        final ActionComposee actionComposee = new ActionComposee("Action Simple", actions);
+        gestionnaire.getPortefeuilleActions().add(actionComposee);
+        assertAll(() -> {
+            assertTrue(gestionnaire.getPortefeuilleActions().contains(actionComposee));
+            assertDoesNotThrow(() -> gestionnaire.removeActionComposee(actionComposee));
+            assertFalse(gestionnaire.getPortefeuilleActions().contains(actionComposee));
+        });
+    }
 }

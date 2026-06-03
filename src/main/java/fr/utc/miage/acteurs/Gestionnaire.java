@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.utc.miage.shares.Action;
+import fr.utc.miage.shares.ActionComposee;
 import fr.utc.miage.shares.ActionSimple;
 import fr.utc.miage.shares.Jour;
 
@@ -62,5 +63,12 @@ public class Gestionnaire extends Personne {
             throw new IllegalArgumentException("L'action à supprimer ne peut pas être null.");
         }
         portefeuilleActions.remove(actionSimple);
+    }
+
+    public void removeActionComposee(ActionComposee actionComposee) {
+        if (actionComposee == null) {
+            throw new IllegalArgumentException("L'action à supprimer ne peut pas être null.");
+        }
+        portefeuilleActions.remove(actionComposee);
     }
 }
