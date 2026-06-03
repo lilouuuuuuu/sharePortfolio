@@ -34,11 +34,13 @@ public class GestionnaireTest {
     public static final String EMAIL = "jean.dupond@gmail.com";
     public static final String PASSWORD = "password";
     public static final String LIBELLE_ACTION_SIMPLE = "Action Simple";
+    public static final String LIBELLE_ACTION_SIMPLE2 = "Action Simple 2";
+    public static final String LIBELLE_ACTION_COMPOSEE = "Action Composée";
+    public static final String LIBELLE_ACTION_COMPOSEE2 = "Action Composée 2";
     public static final float VALEUR_ACTION = 10.0f;
     public static final float NOUVELLE_VALEUR_ACTION = 15.0f;
     public static final Jour jour = new Jour(2025, 1, 1);
     public static final Jour nextDay = new Jour(2025, 1, 2);
-
 
     @Test
     void testConstructorWithCorrectParameters() {
@@ -66,14 +68,16 @@ public class GestionnaireTest {
     @Test
     void testMiseAJourActionSimpleWithNullAction() {
         final Gestionnaire gestionnaire = new Gestionnaire(NOM, PRENOM, EMAIL, PASSWORD);
-        assertThrows(IllegalArgumentException.class, () -> gestionnaire.miseAJourActionSimple(null, jour, VALEUR_ACTION));
+        assertThrows(IllegalArgumentException.class,
+                () -> gestionnaire.miseAJourActionSimple(null, jour, VALEUR_ACTION));
     }
 
     @Test
     void testMiseAJourActionSimpleWhichIsNotInPortefeuille() {
         final Gestionnaire gestionnaire = new Gestionnaire(NOM, PRENOM, EMAIL, PASSWORD);
         ActionSimple actionSimple = new ActionSimple(LIBELLE_ACTION_SIMPLE);
-        assertThrows(IllegalArgumentException.class, () -> gestionnaire.miseAJourActionSimple(actionSimple, jour, VALEUR_ACTION));
+        assertThrows(IllegalArgumentException.class,
+                () -> gestionnaire.miseAJourActionSimple(actionSimple, jour, VALEUR_ACTION));
     }
 
     @Test
@@ -82,13 +86,59 @@ public class GestionnaireTest {
         ActionSimple actionSimple = new ActionSimple(LIBELLE_ACTION_SIMPLE);
         actionSimple.enrgCours(jour, VALEUR_ACTION);
         gestionnaire.setPortefeuilleActions(List.of(actionSimple));
-        
+
         gestionnaire.miseAJourActionSimple(actionSimple, nextDay, NOUVELLE_VALEUR_ACTION);
 
         assertAll(() -> {
             assertEquals(VALEUR_ACTION, actionSimple.valeur(jour));
             assertEquals(NOUVELLE_VALEUR_ACTION, actionSimple.valeur(nextDay));
         });
+    }
+
+    @Test
+    void testMiseAJourActionComposeeWithCorrectParameters() {
+        final Gestionnaire gestionnaire = new Gestionnaire(NOM, PRENOM, EMAIL, PASSWORD);
+        ActionSimple actionSimple1 = new ActionSimple(LIBELLE_ACTION_SIMPLE);
+        ActionSimple actionSimple2 = new ActionSimple(LIBELLE_ACTION_SIMPLE2);
+
+        HashMap<Action, Float> oldActions = new HashMap<>();
+        oldActions.put(actionSimple1, 50.0f);
+        oldActions.put(actionSimple2, 50.0f);
+        ActionComposee actionComposee = new ActionComposee(LIBELLE_ACTION_COMPOSEE, oldActions);
+
+        oldActions.put(actionSimple1, 80.0f);
+        oldActions.put(actionSimple2, 20.0f);
+
+        gestionnaire.miseAJourActionComposee(actionComposee, oldActions);
+
+        assertEquals(oldActions, actionComposee.getActions());
+    }
+
+    @Test
+    void testMiseAJourActionComposeeWithEmptyActions() {
+        final Gestionnaire gestionnaire = new Gestionnaire(NOM, PRENOM, EMAIL, PASSWORD);
+        ActionSimple actionSimpleOld = new ActionSimple(LIBELLE_ACTION_SIMPLE);
+
+        HashMap<Action, Float> old = new HashMap<>();
+        old.put(actionSimpleOld, 100.0f);
+        HashMap<Action, Float> newAction = new HashMap<>();
+
+        ActionComposee actionComposee = new ActionComposee(LIBELLE_ACTION_COMPOSEE, old);
+
+        assertThrows(IllegalArgumentException.class,
+                () -> gestionnaire.miseAJourActionComposee(actionComposee, newAction));
+    }
+
+    @Test
+    void testMiseAJourActionComposeeWithNullParameters() {
+        final Gestionnaire gestionnaire = new Gestionnaire(NOM, PRENOM, EMAIL, PASSWORD);
+        ActionSimple actionSimple = new ActionSimple(LIBELLE_ACTION_SIMPLE);
+        HashMap<Action, Float> actions = new HashMap<>();
+        actions.put(actionSimple, 100.0f);
+
+        assertThrows(IllegalArgumentException.class,
+                () -> gestionnaire.miseAJourActionComposee(null, actions));
+
     }
 
     @Test
@@ -103,8 +153,8 @@ public class GestionnaireTest {
         final ActionSimple actionSimple = new ActionSimple("Action Simple");
         gestionnaire.getPortefeuilleActions().add(actionSimple);
         assertDoesNotThrow(() -> gestionnaire.removeActionSimple(actionSimple));
-    }   
-    
+    }
+
     @Test
     void testRemoveActionComposeeWithNullParameter() {
         final Gestionnaire gestionnaire = new Gestionnaire(NOM, PRENOM, EMAIL, PASSWORD);
