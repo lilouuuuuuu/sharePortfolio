@@ -117,8 +117,12 @@ public class GestionnaireTest {
         final HashMap<Action, Float> actions = new HashMap<>();
         ActionSimple action = new ActionSimple("Action");
         actions.put(action, 100.0f);
-        final ActionComposee actionSimple = new ActionComposee("Action Simple", actions);
-        gestionnaire.getPortefeuilleActions().add(actionSimple);
-        assertDoesNotThrow(() -> gestionnaire.removeActionComposee(actionSimple));
+        final ActionComposee actionComposee = new ActionComposee("Action Simple", actions);
+        gestionnaire.getPortefeuilleActions().add(actionComposee);
+        assertAll(() -> {
+            assertTrue(gestionnaire.getPortefeuilleActions().contains(actionComposee));
+            assertDoesNotThrow(() -> gestionnaire.removeActionComposee(actionComposee));
+            assertFalse(gestionnaire.getPortefeuilleActions().contains(actionComposee));
+        });
     }
 }
