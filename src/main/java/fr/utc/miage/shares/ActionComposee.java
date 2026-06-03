@@ -62,7 +62,7 @@ public class ActionComposee extends Action{
     @Override
     public float valeur(Jour j) {
         float valeurTotale = 0.0f;
-        for (HashMap.Entry<Action, Float> entry : actions.entrySet()) {
+        for (Map.Entry<Action, Float> entry : actions.entrySet()) {
             Action action = entry.getKey();
             float part = entry.getValue();
             valeurTotale += part * action.valeur(j);
