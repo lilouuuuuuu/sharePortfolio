@@ -98,18 +98,20 @@ public class GestionnaireTest {
     @Test
     void testMiseAJourActionComposeeWithCorrectParameters() {
         final Gestionnaire gestionnaire = new Gestionnaire(NOM, PRENOM, EMAIL, PASSWORD);
-        ActionSimple actionSimpleOld = new ActionSimple(LIBELLE_ACTION_SIMPLE);
-        ActionSimple actionSimpleNew = new ActionSimple(LIBELLE_ACTION_SIMPLE);
+        ActionSimple actionSimple1 = new ActionSimple(LIBELLE_ACTION_SIMPLE);
+        ActionSimple actionSimple2 = new ActionSimple(LIBELLE_ACTION_SIMPLE2);
 
-        HashMap<Action, Float> old = new HashMap<>();
-        old.put(actionSimpleOld, 100.0f);
-        HashMap<Action, Float> newAction = new HashMap<>();
-        newAction.put(actionSimpleNew, 100.0f);
+        HashMap<Action, Float> oldActions = new HashMap<>();
+        oldActions.put(actionSimple1, 50.0f);
+        oldActions.put(actionSimple2, 50.0f);
+        ActionComposee actionComposee = new ActionComposee(LIBELLE_ACTION_COMPOSEE, oldActions);
 
-        ActionComposee actionComposee = new ActionComposee(LIBELLE_ACTION_COMPOSEE, old);
-        gestionnaire.miseAJourActionComposee(actionComposee, newAction);
+        oldActions.put(actionSimple1, 80.0f);
+        oldActions.put(actionSimple2, 20.0f);
 
-        assertEquals(newAction, actionComposee.getActions());
+        gestionnaire.miseAJourActionComposee(actionComposee, oldActions);
+
+        assertEquals(oldActions, actionComposee.getActions());
     }
 
     @Test

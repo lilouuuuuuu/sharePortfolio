@@ -17,8 +17,8 @@
 package fr.utc.miage.acteurs;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import fr.utc.miage.shares.Action;
 import fr.utc.miage.shares.ActionComposee;
@@ -59,7 +59,7 @@ public class Gestionnaire extends Personne {
         throw new IllegalArgumentException("L'action simple à mettre à jour n'existe pas dans le portefeuille.");
     }
 
-    public void miseAJourActionComposee(ActionComposee actioncomposee, HashMap<Action, Float> nouvelleActionComposee) {
+    public void miseAJourActionComposee(ActionComposee actioncomposee, Map<Action, Float> nouvelleActionComposee) {
 
         if (actioncomposee == null) {
             throw new IllegalArgumentException("L'action composée ne peut être null.");
